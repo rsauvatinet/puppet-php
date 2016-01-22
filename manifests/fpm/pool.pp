@@ -16,6 +16,7 @@
 #  }
 #
 define php::fpm::pool (
+  $pool = $title,
   $ensure = 'present',
   $listen = '127.0.0.1:9000',
   # Puppet does not allow dots in variable names
@@ -51,21 +52,21 @@ define php::fpm::pool (
   $php_admin_value = {},
   $php_admin_flag = {},
   $php_directives = [],
-  $error_log = true
+  $error_log = true,
+  $base_dir = '/etc/php5/fpm/pool.d',
 ) {
 
-  $pool = $title
 
   # Hack-ish to default to user for group too
   $group_final = $group ? { undef => $user, default => $group }
 
   if ($ensure == 'absent') {
-    file { "/etc/php5/fpm/pool.d/${pool}.conf":
+    file { "${base_dir}/${pool}.conf":
       ensure => absent,
       notify => Service['php5-fpm']
     }
   } else {
-    file { "/etc/php5/fpm/pool.d/${pool}.conf":
+    file { "${base_dir}/${pool}.conf":
       ensure  => file,
       notify  => Service['php5-fpm'],
       require => Package['php5-fpm'],
