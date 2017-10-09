@@ -53,6 +53,8 @@ define php::fpm::pool (
   $php_admin_flag = {},
   $php_directives = [],
   $error_log = true,
+  $access_log = undef,
+  $access_log_format = undef,
   $base_dir = '/etc/php5/fpm/pool.d',
 ) {
 

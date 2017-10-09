@@ -263,6 +263,12 @@ env[<%= key %>] = <%= value %>
 ;error_log = <%= @error_log %>
 ;log_errors = on
 <% end %>
+<% if @access_log -%>
+access.log = "<%= @access_log.gsub(/"/, '\"') %>"
+<% end -%>
+<% if @access_log_format -%>
+access.format = "<%= @access_log_format.gsub(/"/, '\"') %>"
+<% end -%>
 
 ;
 ; Custom PHP values
